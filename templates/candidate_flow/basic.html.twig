@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <div class="min-vh-100 d-flex align-items-center justify-content-center bg-light py-5">
+        <div class="container">
+            <div class="row justify-content-center">
+                <div class="col-md-8 col-lg-6">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-primary text-white text-center py-3">
+                            <h2 class="mb-0 fw-bold">Inscription</h2>
+                            <div class="mt-2">
+                                <span class="badge bg-light text-primary">
+                                    Étape {{ form.vars.cursor.stepIndex + 1 }} / {{ form.vars.cursor.totalSteps }}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="card-body p-4">
+
+                            {% set current_step = form.vars.cursor.currentStep %}
+
+                            {% if current_step == 'review' %}
+                                <div class="alert alert-info mb-4">
+                                    <h5 class="alert-heading">Récapitulatif</h5>
+                                    <hr>
+                                    <dl class="row mb-0">
+                                        <dt class="col-sm-5">Prénom</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.firstName }}</dd>
+
+                                        <dt class="col-sm-5">Nom</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.lastName }}</dd>
+
+                                        <dt class="col-sm-5">Email</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.email }}</dd>
+
+                                        <dt class="col-sm-5">Téléphone</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.phone }}</dd>
+
+                                        <dt class="col-sm-5">Expérience</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.hasExperience ? 'Oui' : 'Non' }}</dd>
+
+                                        {% if form.vars.data.hasExperience %}
+                                            <dt class="col-sm-5">Détails de l'expérience</dt>
+                                            <dd class="col-sm-7">{{ form.vars.data.experienceDetails }}</dd>
+                                        {% endif %}
+
+                                        <dt class="col-sm-5">Disponibilité</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.availableImmediately ? 'Oui' : 'Non' }}</dd>
+                                        {% if form.vars.data.availableImmediately == false %}
+                                            <dt class="col-sm-5">Date de disponibilité</dt>
+                                            <dd class="col-sm-7">{{ form.vars.data.availabilityDate|date('d/m/Y') }}</dd>
+                                        {% endif %}
+
+                                        <dt class="col-sm-5">Consentement RGPD</dt>
+                                        <dd class="col-sm-7">{{ form.vars.data.consentRGPD ? 'Oui' : 'Non' }}</dd>
+                                    </dl>
+                                </div>
+                            {% endif %}
+
+                            {{ form(form) }}
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
