@@ -1,0 +1,14 @@
+<div class="max-w-md mx-auto bg-white p-8 border border-gray-200 rounded-lg shadow-lg">
+    {{ form_start(form) }}
+        <div class="mb-4">
+            {{ form_row(form.name, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500'}}) }}
+        </div>
+        <div class="mb-6">
+            {{ form_row(form.description, {'attr': {'class': 'w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-blue-500 focus:border-blue-500', 'rows': 4}}) }}
+        </div>
+        
+        <button type="submit" class="w-full bg-green-500 text-white font-bold py-2 px-4 rounded-md hover:bg-green-600 transition duration-150">
+            {{ button_label|default('Enregistrer') }}
+        </button>
+    {{ form_end(form) }}
+</div>

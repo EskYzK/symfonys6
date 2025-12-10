@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des tâches{% endblock %}
+
+{% block body %}
+    <div class="container mx-auto p-4">
+        <h1 class="text-3xl font-bold mb-6">Mes Tâches</h1>
+
+        {% if is_granted('TASK_CREATE') %}
+            <a href="{{ path('task_create') }}" class="inline-block px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 mb-6">Créer une nouvelle tâche</a>
+        {% endif %}
+
+        {% if tasks is empty %}
+            <p class="text-gray-600">Aucune tâche enregistrée pour le moment.</p>
+        {% else %}
+            <div class="space-y-4">
+                {% for task in tasks %}
+                    <div class="bg-white shadow-md rounded-lg p-4 flex justify-between items-center">
+                        <div>
+                            <h2 class="text-xl font-semibold text-gray-800">{{ task.name }}</h2>
+                            <p class="text-sm text-gray-500">Créée le {{ task.createdAt|date('Y-m-d') }} par {{ task.author.email }}</p>
+                        </div>
+                        <div class="flex space-x-2">
+                            <a href="{{ path('task_view', {id: task.id}) }}" class="text-blue-500 hover:text-blue-700">Voir</a>
+                            
+                            {% if is_granted('TASK_EDIT', task) %}
+                                <a href="{{ path('task_edit', {id: task.id}) }}" class="text-yellow-500 hover:text-yellow-700">Modifier</a>
+                            {% endif %}
+
+                            {% if is_granted('TASK_DELETE', task) %}
+                                <form method="post" action="{{ path('task_delete', {id: task.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette tâche ?');">
+                                    <input type="hidden" name="_method" value="POST">
+                                    <button type="submit" class="text-red-500 hover:text-red-700">Supprimer</button>
+                                </form>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}
