@@ -11,6 +11,6 @@ class HomeController extends AbstractController
     #[Route('/', name: 'home')]
     public function index(): Response
     {
-        return $this->render('base.html.twig');
+        return $this->redirectToRoute('candidate_form_flow');
     }
 }
