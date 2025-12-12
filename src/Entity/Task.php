@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use App\Repository\TaskRepository;
-use App\Trait\TimestampableTrait; // 1. On importe le namespace du Trait
+use App\Traits\TimestampableTrait;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: TaskRepository::class)]
 class Task
 {
-    use TimestampableTrait; // 2. On utilise le Trait ici
+    use TimestampableTrait;
 
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -23,7 +23,6 @@ class Task
     #[ORM\Column(type: Types::TEXT)]
     private ?string $description = null;
 
-    // Les propriétés createdAt et updatedAt ont été supprimées car elles sont dans le Trait
 
     #[ORM\ManyToOne(inversedBy: 'tasks')]
     #[ORM\JoinColumn(nullable: false)]

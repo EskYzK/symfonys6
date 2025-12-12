@@ -58,12 +58,16 @@ class TaskController extends AbstractController
         ]);
     }
 
-    // 3. Modifier une tâche
     #[Route('/{id}/edit', name: 'task_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Task $task): Response
     {
         $this->denyAccessUnlessGranted('TASK_EDIT', $task); 
         
+        if (!$taskService->canEdit($task)) {
+            $this->addFlash('error', 'Vous ne pouvez plus modifier cette tâche (créée il y a plus de 7 jours).');
+            return $this->redirectToRoute('task_index');
+        }
+
         $form = $this->createForm(TaskType::class, $task);
         $form->handleRequest($request);
 
